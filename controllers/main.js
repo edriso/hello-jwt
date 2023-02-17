@@ -23,6 +23,15 @@ const login = async (req, res) => {
 };
 
 const dashboard = async (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    throw new CustomAPIError("No token provided", 401);
+  }
+
+  const token = authHeader.split(" ")[1];
+  console.log(token);
+
   const randomNumber = Math.floor(Math.random() * 101);
 
   res.status(200).json({
